@@ -1,14 +1,15 @@
 
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 import { RootState } from '@/store';
 import { fetchTasks } from '@/store/slices/taskSlice';
 import TaskItem from './TaskItem';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import { useAppDispatch } from '@/store';
 
 const TaskList: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { tasks, status } = useSelector((state: RootState) => state.tasks);
   
   useEffect(() => {

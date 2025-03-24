@@ -1,8 +1,8 @@
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '../store';
+import { RootState, useAppDispatch } from '../store';
 import { 
   login as loginAction, 
   signup as signupAction, 
@@ -23,7 +23,7 @@ interface SignupCredentials extends LoginCredentials {
  * Custom hook for authentication state and actions
  */
 export const useAuth = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { user, isAuthenticated, status, error } = useSelector(
     (state: RootState) => state.auth

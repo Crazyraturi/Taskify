@@ -27,6 +27,7 @@ export const getWeatherForLocation = async (location: string): Promise<WeatherDa
       weatherCache[cacheKey] && 
       now - weatherCache[cacheKey].timestamp < CACHE_EXPIRY
     ) {
+      console.log('Returning cached weather data for:', location);
       return weatherCache[cacheKey].data;
     }
     
@@ -34,13 +35,25 @@ export const getWeatherForLocation = async (location: string): Promise<WeatherDa
     // Using a free API key for demo purposes
     const apiKey = 'bf1b5b65bae5d1052f8dbfbadfe4d680';
     
+    console.log('Fetching weather data for:', location);
+    toast.info(`Fetching weather data for ${location}...`);
+    
     // Fetch weather data
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(location)}&units=metric&appid=${apiKey}`
     );
     
     if (!response.ok) {
-      throw new Error(`Weather API error: ${response.statusText}`);
+      const errorData = await response.json();
+      console.error('Weather API error:', errorData);
+      
+      if (response.status === 404) {
+        toast.error(`Location "${location}" not found. Please check spelling.`);
+      } else {
+        toast.error(`Weather API error: ${errorData.message || response.statusText}`);
+      }
+      
+      return null;
     }
     
     const data = await response.json();
@@ -59,9 +72,11 @@ export const getWeatherForLocation = async (location: string): Promise<WeatherDa
       timestamp: now,
     };
     
+    toast.success(`Weather data loaded for ${weatherData.location}`);
     return weatherData;
   } catch (error) {
     console.error('Failed to fetch weather:', error);
+    toast.error('Network error fetching weather data. Please try again.');
     return null;
   }
 };

@@ -1,6 +1,4 @@
-
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -14,9 +12,10 @@ import { fetchWeatherWithErrorHandling } from '@/services/weatherApi';
 import { CalendarIcon, MapPin, PlusCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { useAppDispatch } from '@/store';
 
 const TaskInput: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<'high' | 'medium' | 'low'>('medium');

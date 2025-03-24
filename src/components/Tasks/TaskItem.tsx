@@ -1,6 +1,4 @@
-
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -9,13 +7,14 @@ import { Badge } from '@/components/ui/badge';
 import { deleteTask, toggleTaskCompletion, Task, Priority } from '@/store/slices/taskSlice';
 import { CalendarIcon, Trash2, Cloud } from 'lucide-react';
 import { format } from 'date-fns';
+import { useAppDispatch } from '@/store';
 
 interface TaskItemProps {
   task: Task;
 }
 
 const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   
   const priorityColors: Record<Priority, string> = {
     high: 'bg-priority-high text-white',
@@ -45,7 +44,6 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
         }`}
       >
         <div className="flex items-start gap-3">
-          {/* Checkbox */}
           <div className="pt-0.5">
             <Checkbox 
               checked={task.completed}
@@ -54,7 +52,6 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
             />
           </div>
           
-          {/* Task content */}
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2 mb-1">
               <h3 className={`font-medium text-base ${
@@ -67,7 +64,6 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
               </Badge>
             </div>
             
-            {/* Description if available */}
             {task.description && (
               <p className={`text-sm mt-1 ${
                 task.completed ? 'text-muted-foreground/70 line-through' : 'text-muted-foreground'
@@ -76,9 +72,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
               </p>
             )}
             
-            {/* Task metadata */}
             <div className="flex flex-wrap gap-2 mt-2">
-              {/* Due date */}
               {task.dueDate && (
                 <div className="flex items-center gap-1 text-xs text-muted-foreground">
                   <CalendarIcon className="h-3 w-3" />
@@ -86,7 +80,6 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
                 </div>
               )}
               
-              {/* Weather info */}
               {task.weather && (
                 <div className="flex items-center gap-1 text-xs text-muted-foreground">
                   <Cloud className="h-3 w-3" />
@@ -101,7 +94,6 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
             </div>
           </div>
           
-          {/* Task actions */}
           <Button
             variant="ghost"
             size="sm"
