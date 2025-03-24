@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
@@ -5,7 +6,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { deleteTask, toggleTaskCompletion, Task, Priority } from '@/store/slices/taskSlice';
-import { CalendarIcon, Trash2, Cloud } from 'lucide-react';
+import { CalendarIcon, Trash2, MapPin, CloudSun, Thermometer } from 'lucide-react';
 import { format } from 'date-fns';
 import { useAppDispatch } from '@/store';
 
@@ -28,6 +29,15 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
   
   const handleToggleComplete = () => {
     dispatch(toggleTaskCompletion(task.id));
+  };
+
+  // Weather condition icon mapper
+  const getWeatherIcon = (condition: string) => {
+    const condition_lower = condition.toLowerCase();
+    if (condition_lower.includes('cloud')) return <CloudSun className="h-4 w-4" />;
+    if (condition_lower.includes('sun') || condition_lower.includes('clear')) return <CloudSun className="h-4 w-4" />;
+    // Default icon
+    return <CloudSun className="h-4 w-4" />;
   };
   
   return (
@@ -80,18 +90,38 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
                 </div>
               )}
               
-              {task.weather && (
+              {task.location && (
                 <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <Cloud className="h-3 w-3" />
-                  <span>{task.location}: {task.weather.temp}°C, {task.weather.condition}</span>
-                  <img 
-                    src={task.weather.icon} 
-                    alt={task.weather.condition}
-                    className="h-4 w-4"
-                  />
+                  <MapPin className="h-3 w-3" />
+                  <span>{task.location}</span>
                 </div>
               )}
             </div>
+            
+            {/* Enhanced Weather Display */}
+            {task.weather && (
+              <div className="mt-2 p-2 bg-muted/30 rounded-md border border-border/50">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <img 
+                      src={task.weather.icon} 
+                      alt={task.weather.condition}
+                      className="h-8 w-8"
+                    />
+                    <div>
+                      <div className="text-xs font-medium">{task.weather.condition}</div>
+                      <div className="flex items-center gap-1">
+                        <Thermometer className="h-3 w-3 text-muted-foreground" />
+                        <span className="text-xs">{task.weather.temp}°C</span>
+                      </div>
+                    </div>
+                  </div>
+                  <Badge variant="outline" className="text-xs">
+                    {task.location}
+                  </Badge>
+                </div>
+              </div>
+            )}
           </div>
           
           <Button
