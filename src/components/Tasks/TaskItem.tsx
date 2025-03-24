@@ -103,11 +103,13 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
               <div className="mt-2 p-2 bg-muted/30 rounded-md border border-border/50">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <img 
-                      src={task.weather.icon} 
-                      alt={task.weather.condition}
-                      className="h-8 w-8"
-                    />
+                    {task.weather.icon && (
+                      <img 
+                        src={task.weather.icon} 
+                        alt={task.weather.condition}
+                        className="h-8 w-8"
+                      />
+                    )}
                     <div>
                       <div className="text-xs font-medium">{task.weather.condition}</div>
                       <div className="flex items-center gap-1">

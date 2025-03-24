@@ -33,12 +33,12 @@ export const getWeatherForLocation = async (location: string): Promise<WeatherDa
     
     // API key - This is a public API key for the demo
     const apiKey = '6661b9978e594f1ab07145010252403';
-    const baseUrl = 'http://api.weatherapi.com/v1';
+    const baseUrl = 'https://api.weatherapi.com/v1'; // Changed to https
     
     console.log('Fetching weather data for:', location);
     toast.info(`Fetching weather data for ${location}...`);
     
-    // Fetch weather data from WeatherAPI.com
+    // Fetch weather data from WeatherAPI.com using the /current.json endpoint
     const response = await fetch(
       `${baseUrl}/current.json?key=${apiKey}&q=${encodeURIComponent(location)}&aqi=no`
     );
@@ -57,13 +57,14 @@ export const getWeatherForLocation = async (location: string): Promise<WeatherDa
     }
     
     const data = await response.json();
+    console.log('Weather API response:', data); // Log the full response for debugging
     
     // Format response
     const weatherData: WeatherData = {
       location: data.location.name,
       temp: Math.round(data.current.temp_c),
       condition: data.current.condition.text,
-      icon: data.current.condition.icon,
+      icon: 'https:' + data.current.condition.icon, // Add https: prefix to icon URLs
     };
     
     // Cache the result
