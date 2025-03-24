@@ -15,7 +15,7 @@ const CACHE_EXPIRY = 30 * 60 * 1000; // 30 minutes
 
 /**
  * Get weather data for a location
- * Using OpenWeatherMap API
+ * Using WeatherAPI.com
  */
 export const getWeatherForLocation = async (location: string): Promise<WeatherData | null> => {
   try {
@@ -31,16 +31,16 @@ export const getWeatherForLocation = async (location: string): Promise<WeatherDa
       return weatherCache[cacheKey].data;
     }
     
-    // API key - in a real app, this would be stored in environment variables
-    // Using a free API key for demo purposes
-    const apiKey = 'bf1b5b65bae5d1052f8dbfbadfe4d680';
+    // API key - This is a public API key for the demo
+    const apiKey = '6661b9978e594f1ab07145010252403';
+    const baseUrl = 'http://api.weatherapi.com/v1';
     
     console.log('Fetching weather data for:', location);
     toast.info(`Fetching weather data for ${location}...`);
     
-    // Fetch weather data
+    // Fetch weather data from WeatherAPI.com
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(location)}&units=metric&appid=${apiKey}`
+      `${baseUrl}/current.json?key=${apiKey}&q=${encodeURIComponent(location)}&aqi=no`
     );
     
     if (!response.ok) {
@@ -50,7 +50,7 @@ export const getWeatherForLocation = async (location: string): Promise<WeatherDa
       if (response.status === 404) {
         toast.error(`Location "${location}" not found. Please check spelling.`);
       } else {
-        toast.error(`Weather API error: ${errorData.message || response.statusText}`);
+        toast.error(`Weather API error: ${errorData.error?.message || response.statusText}`);
       }
       
       return null;
@@ -60,10 +60,10 @@ export const getWeatherForLocation = async (location: string): Promise<WeatherDa
     
     // Format response
     const weatherData: WeatherData = {
-      location: data.name,
-      temp: Math.round(data.main.temp),
-      condition: data.weather[0].main,
-      icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
+      location: data.location.name,
+      temp: Math.round(data.current.temp_c),
+      condition: data.current.condition.text,
+      icon: data.current.condition.icon,
     };
     
     // Cache the result
