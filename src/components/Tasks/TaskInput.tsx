@@ -73,11 +73,11 @@ const TaskInput: React.FC = () => {
           />
           <Button 
             type="submit" 
-            className="text-primary-foreground transition-all duration-300 ease-apple"
+            className="text-primary-foreground transition-all   bg-orange-300 duration-300 ease-apple"
             disabled={!title.trim()}
           >
             <PlusCircle className="h-5 w-5" />
-            <span className="ml-2 hidden sm:inline">Add Task</span>
+            <span className="ml-2 hidden 0  sm:inline">Add Task</span>
           </Button>
         </div>
         
@@ -86,17 +86,17 @@ const TaskInput: React.FC = () => {
           <Button 
             type="button" 
             variant="ghost" 
-            onClick={() => setShowDetails(!showDetails)}
-            className="px-0 text-sm transition-all duration-200"
+            onClick={() => setShowDetails(!showDetails)} 
+            className="px-0 text-sm transition-all bg-orange-200 p-2 hover:bg-orange-400 duration-200"
           >
-            {showDetails ? 'Hide details' : 'Add details'}
+            {showDetails ? 'Hide details' : 'Add More Details'}
           </Button>
           
           {/* Priority selection (always visible) */}
           <RadioGroup 
             value={priority} 
             onValueChange={(value) => setPriority(value as 'high' | 'medium' | 'low')}
-            className="flex gap-1"
+            className="flex gap-5"
           >
             <div className="flex items-center space-x-1">
               <RadioGroupItem 

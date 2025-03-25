@@ -19,7 +19,7 @@ const SignupForm: React.FC = () => {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto glass-panel animate-scale-in">
+    <Card className="w-full max-w-md  mx-auto glass-panel animate-scale-in">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-semibold text-center">Create an account</CardTitle>
         <CardDescription className="text-center">
@@ -71,7 +71,7 @@ const SignupForm: React.FC = () => {
           </div>
           <Button 
             type="submit" 
-            className="w-full transition-all duration-300 ease-apple"
+            className="w-full hover:border border-orange-500 transition-all duration-300 ease-apple"
             disabled={isLoading}
           >
             {isLoading ? <LoadingSpinner size="sm" /> : 'Create Account'}

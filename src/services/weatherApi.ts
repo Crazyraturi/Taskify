@@ -1,4 +1,3 @@
-
 import { toast } from 'sonner';
 
 // Weather data interface
@@ -7,6 +6,12 @@ export interface WeatherData {
   temp: number;
   condition: string;
   icon: string;
+  humidity?: number;
+  wind?: {
+    speed: number;
+    direction: string;
+  };
+  lastUpdated?: string;
 }
 
 // Cache for weather data to avoid excessive API calls
@@ -33,7 +38,7 @@ export const getWeatherForLocation = async (location: string): Promise<WeatherDa
     
     // API key - This is a public API key for the demo
     const apiKey = '6661b9978e594f1ab07145010252403';
-    const baseUrl = 'https://api.weatherapi.com/v1'; // Changed to https
+    const baseUrl = 'https://api.weatherapi.com/v1';
     
     console.log('Fetching weather data for:', location);
     toast.info(`Fetching weather data for ${location}...`);
@@ -59,12 +64,29 @@ export const getWeatherForLocation = async (location: string): Promise<WeatherDa
     const data = await response.json();
     console.log('Weather API response:', data); // Log the full response for debugging
     
+    // Validate data structure
+    if (!data.location || !data.current) {
+      console.error('Invalid API response format:', data);
+      toast.error('Invalid weather data received. Please try again.');
+      return null;
+    }
+    
     // Format response
     const weatherData: WeatherData = {
       location: data.location.name,
       temp: Math.round(data.current.temp_c),
       condition: data.current.condition.text,
-      icon: 'https:' + data.current.condition.icon, // Add https: prefix to icon URLs
+      // Handle icon URL correctly - it comes as //cdn.weatherapi.com/...
+      icon: data.current.condition.icon.startsWith('//') 
+        ? 'https:' + data.current.condition.icon 
+        : data.current.condition.icon,
+      // Add additional weather information
+      humidity: data.current.humidity,
+      wind: {
+        speed: data.current.wind_kph,
+        direction: data.current.wind_dir
+      },
+      lastUpdated: data.current.last_updated
     };
     
     // Cache the result

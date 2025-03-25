@@ -18,7 +18,7 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto glass-panel animate-scale-in">
+    <Card className="w-full max-w-md mx-auto border-orange-200 glass-panel animate-scale-in">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-semibold text-center">Sign In</CardTitle>
         <CardDescription className="text-center">
@@ -38,7 +38,7 @@ const LoginForm: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="transition-all duration-200"
+              className="transition-all  duration-200"
             />
           </div>
           <div className="space-y-2">
@@ -59,7 +59,7 @@ const LoginForm: React.FC = () => {
           </div>
           <Button 
             type="submit" 
-            className="w-full transition-all duration-300 ease-apple"
+            className="w-full  hover:border border-orange-500 transition-all duration-300 ease-apple"
             disabled={isLoading}
           >
             {isLoading ? <LoadingSpinner size="sm" /> : 'Sign In'}
@@ -67,7 +67,7 @@ const LoginForm: React.FC = () => {
         </form>
         
         {/* Demo credentials */}
-        <div className="mt-4 p-3 bg-muted/50 rounded-md">
+        <div className="mt-4 p-3  border border-orange-200 bg-muted/50 rounded-md">
           <p className="text-sm text-muted-foreground text-center">
             <strong>Demo credentials:</strong><br />
             Email: user@example.com<br />

@@ -1,69 +1,163 @@
-# Welcome to your Lovable project
+# Taskify - Modern Task Management Web Application
 
-## Project info
+Taskify is a feature-rich task management web application built with React, TypeScript, and Vite. It offers a sleek user interface, task prioritization, weather integration, and more.
 
-**URL**: https://lovable.dev/projects/59746113-7c57-4a91-b73b-b3f61071153c
+![Taskify Screenshot](https://i.imgur.com/example.png) <!-- Replace with actual screenshot when available -->
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- **User Authentication**: Secure signup, login, and logout functionality
+- **Task Management**: Create, read, update, and delete tasks
+- **Task Prioritization**: Set priority levels (high, medium, low) for tasks
+- **Due Dates**: Add due dates to tasks for better time management
+- **Location & Weather Integration**: Add locations to tasks and view real-time weather data
+- **Data Persistence**: Tasks are stored locally using browser localStorage
+- **Responsive Design**: Beautiful, mobile-friendly interface
+- **Visual Feedback**: Animations and toast notifications for user actions
 
-**Use Lovable**
+## Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/59746113-7c57-4a91-b73b-b3f61071153c) and start prompting.
+- **Frontend Framework**: React with TypeScript
+- **State Management**: Redux Toolkit
+- **Styling**: Tailwind CSS with shadcn/ui components
+- **Build Tool**: Vite
+- **UI Animation**: Framer Motion
+- **Date Handling**: date-fns
+- **Form Management**: React Hook Form with Zod validation
+- **Icons**: Lucide React
+- **Toast Notifications**: Sonner
 
-Changes made via Lovable will be committed automatically to this repo.
+## Prerequisites
 
-**Use your preferred IDE**
+Before you begin, ensure you have the following installed:
+- Node.js (v16.0.0 or higher)
+- npm (v8.0.0 or higher) or yarn (v1.22.0 or higher)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Follow these steps to set up the project locally:
 
-Follow these steps:
+1. **Clone the repository**
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+git clone https://github.com/yourusername/taskify.git
+cd taskify
 ```
 
-**Edit a file directly in GitHub**
+2. **Install dependencies**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm install
+# or
+yarn install
+```
 
-**Use GitHub Codespaces**
+3. **Create a .env file for environment variables**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```
+# .env
+VITE_WEATHER_API_KEY=your_weatherapi_com_api_key
+```
 
-## What technologies are used for this project?
+Note: The app currently uses a demo API key, but for production, you should obtain your own API key from [WeatherAPI.com](https://www.weatherapi.com).
 
-This project is built with .
+4. **Start the development server**
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```bash
+npm run dev
+# or
+yarn dev
+```
 
-## How can I deploy this project?
+5. **Open the application**
 
-Simply open [Lovable](https://lovable.dev/projects/59746113-7c57-4a91-b73b-b3f61071153c) and click on Share -> Publish.
+Navigate to `http://localhost:5173` in your browser.
 
-## I want to use a custom domain - is that possible?
+## Building for Production
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+To create a production-ready build:
+
+```bash
+npm run build
+# or
+yarn build
+```
+
+The build artifacts will be stored in the `dist/` directory.
+
+To preview the production build locally:
+
+```bash
+npm run preview
+# or
+yarn preview
+```
+
+## Project Structure
+
+```
+taskify/
+├── public/              # Static assets
+│   ├── components/      # Reusable UI components
+│   │   ├── Tasks/       # Task-related components
+│   │   └── ui/          # UI component library
+│   ├── hooks/           # Custom React hooks
+│   ├── lib/             # Utility functions
+│   ├── pages/           # Page components
+│   ├── services/        # API services
+│   ├── store/           # Redux store configuration
+│   │   └── slices/      # Redux slice files
+│   ├── App.tsx          # Main App component
+│   └── main.tsx         # Application entry point
+├── .env                 # Environment variables
+├── index.html           # HTML template
+├── package.json         # Project dependencies and scripts
+├── tailwind.config.ts   # Tailwind CSS configuration
+├── tsconfig.json        # TypeScript configuration
+└── vite.config.ts       # Vite configuration
+```
+
+## Key Features & Usage
+
+### Authentication
+
+- **Sign Up**: Create a new account with email and password
+- **Login**: Access your tasks with your account credentials
+- **Logout**: Securely log out of your account
+
+### Task Management
+
+- **Create Tasks**: Add new tasks with a title, description, priority, due date, and location
+- **Edit Tasks**: Update existing tasks
+- **Complete Tasks**: Mark tasks as completed with a checkbox
+- **Delete Tasks**: Remove unwanted tasks
+- **Prioritize**: Set task priority as high, medium, or low
+- **Weather Integration**: Tasks with locations will display current weather conditions
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [WeatherAPI.com](https://www.weatherapi.com/)
+- [Framer Motion](https://www.framer.com/motion/)
+
+---
+
+Made with ❤️ by Subodh raturi
