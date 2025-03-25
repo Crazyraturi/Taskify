@@ -7,7 +7,9 @@ is a feature-rich task management web application built with React, TypeScript, 
 ## screenshots
 
  **Dashboard**
-  ![tasikyfy-dashboard1](https://github.com/user-attachments/assets/7ec35d36-2ff0-4062-aaad-db1b36c9af26)
+ ![dashboard](https://github.com/user-attachments/assets/3287e628-f054-4b02-96c1-bea2d7018609)
+
+ 
  **Adding Task**
    ![adding task](https://github.com/user-attachments/assets/a84ecb08-7dda-42d3-a35b-03e2e6110b19)
  **Task Added**  
