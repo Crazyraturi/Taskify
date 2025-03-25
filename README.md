@@ -1,10 +1,24 @@
-# Taskify - Modern Task Management Web Application
+ ![icons8-task-64](https://github.com/user-attachments/assets/30e3e9c1-40ba-45bf-815d-58c461b3a675)
+ ## Taskify -Modern Task Management Web Application
 
-Taskify is a feature-rich task management web application built with React, TypeScript, and Vite. It offers a sleek user interface, task prioritization, weather integration, and more.
 
-![Taskify Screenshot](https://i.imgur.com/example.png) <!-- Replace with actual screenshot when available -->
+is a feature-rich task management web application built with React, TypeScript, and Vite. It offers a sleek user interface, task prioritization, weather integration, and more.
 
-## Features
+## screenshots
+
+ **Dashboard**
+  ![tasikyfy-dashboard1](https://github.com/user-attachments/assets/7ec35d36-2ff0-4062-aaad-db1b36c9af26)
+ **Adding Task**
+   ![adding task](https://github.com/user-attachments/assets/a84ecb08-7dda-42d3-a35b-03e2e6110b19)
+ **Task Added**  
+  ![taskadder](https://github.com/user-attachments/assets/8bfbb7aa-d6c6-414c-8e0e-5aa700ecfa8d)
+**Sign In**
+ ![signin](https://github.com/user-attachments/assets/9355fe50-73af-478b-8c46-a1ea95bd32c3)
+**Sign Up**
+  ![signup](https://github.com/user-attachments/assets/a6d85f90-8919-40e7-ae60-3e1250dd8eae)
+
+  
+  ## Features
 
 - **User Authentication**: Secure signup, login, and logout functionality
 - **Task Management**: Create, read, update, and delete tasks
