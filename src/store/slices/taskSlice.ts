@@ -1,4 +1,3 @@
-
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { toast } from 'sonner';
 
@@ -18,6 +17,12 @@ export interface Task {
     temp: number;
     condition: string;
     icon: string;
+    humidity?: number;
+    wind?: {
+      speed: number;
+      direction: string;
+    };
+    lastUpdated?: string;
   };
   location?: string;
 }

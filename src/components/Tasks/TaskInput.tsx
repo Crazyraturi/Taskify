@@ -46,6 +46,9 @@ const TaskInput: React.FC = () => {
         temp: weatherData.temp,
         condition: weatherData.condition,
         icon: weatherData.icon,
+        humidity: weatherData.humidity,
+        wind: weatherData.wind,
+        lastUpdated: weatherData.lastUpdated
       } : undefined,
     };
     
@@ -62,83 +65,88 @@ const TaskInput: React.FC = () => {
   };
 
   return (
-    <Card className="glass-panel p-4 mb-8">
+    <Card className="glass-panel p-5 mb-8 border-t-4 border-t-orange-400 shadow-md">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex gap-2">
           <Input
-            placeholder="Add a new task..."
+            placeholder="What needs to be done?"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="transition-all duration-200"
+            className="transition-all duration-200 text-base py-5 focus-visible:ring-orange-400"
           />
           <Button 
             type="submit" 
-            className="text-primary-foreground transition-all   bg-orange-300 duration-300 ease-apple"
+            className="text-primary-foreground transition-all bg-orange-400 hover:bg-orange-500 duration-300"
             disabled={!title.trim()}
           >
             <PlusCircle className="h-5 w-5" />
-            <span className="ml-2 hidden 0  sm:inline">Add Task</span>
+            <span className="ml-2 hidden sm:inline">Add Task</span>
           </Button>
         </div>
         
         {/* Task details section - toggleable */}
-        <div className="flex justify-between items-center">
+        <div className="flex flex-wrap justify-between items-center gap-3">
           <Button 
             type="button" 
             variant="ghost" 
             onClick={() => setShowDetails(!showDetails)} 
-            className="px-0 text-sm transition-all bg-orange-200 p-2 hover:bg-orange-400 duration-200"
+            className={`px-3 text-sm transition-all ${showDetails ? 
+              'bg-orange-100 hover:bg-orange-200 text-orange-700' : 
+              'bg-orange-100 hover:bg-orange-200 text-orange-600'} 
+              rounded-full py-1 border border-orange-200`}
           >
-            {showDetails ? 'Hide details' : 'Add More Details'}
+            {showDetails ? '− Hide details' : '+ Add details'}
           </Button>
           
           {/* Priority selection (always visible) */}
-          <RadioGroup 
-            value={priority} 
-            onValueChange={(value) => setPriority(value as 'high' | 'medium' | 'low')}
-            className="flex gap-5"
-          >
-            <div className="flex items-center space-x-1">
-              <RadioGroupItem 
-                value="high" 
-                id="high" 
-                className="bg-priority-high text-white border-none"
-              />
-              <Label htmlFor="high" className="text-xs cursor-pointer">High</Label>
-            </div>
-            <div className="flex items-center space-x-1">
-              <RadioGroupItem 
-                value="medium" 
-                id="medium" 
-                className="bg-priority-medium text-white border-none"
-              />
-              <Label htmlFor="medium" className="text-xs cursor-pointer">Medium</Label>
-            </div>
-            <div className="flex items-center space-x-1">
-              <RadioGroupItem 
-                value="low" 
-                id="low" 
-                className="bg-priority-low text-white border-none"
-              />
-              <Label htmlFor="low" className="text-xs cursor-pointer">Low</Label>
-            </div>
-          </RadioGroup>
+          <div className="bg-muted/50 p-1 rounded-full border border-border/50">
+            <RadioGroup 
+              value={priority} 
+              onValueChange={(value) => setPriority(value as 'high' | 'medium' | 'low')}
+              className="flex gap-2"
+            >
+              <div className="flex items-center space-x-1 px-2">
+                <RadioGroupItem 
+                  value="high" 
+                  id="high" 
+                  className="bg-red-500 text-white border-none h-3 w-3"
+                />
+                <Label htmlFor="high" className="text-xs cursor-pointer">High</Label>
+              </div>
+              <div className="flex items-center space-x-1 px-2">
+                <RadioGroupItem 
+                  value="medium" 
+                  id="medium" 
+                  className="bg-amber-500 text-white border-none h-3 w-3"
+                />
+                <Label htmlFor="medium" className="text-xs cursor-pointer">Medium</Label>
+              </div>
+              <div className="flex items-center space-x-1 px-2">
+                <RadioGroupItem 
+                  value="low" 
+                  id="low" 
+                  className="bg-green-500 text-white border-none h-3 w-3"
+                />
+                <Label htmlFor="low" className="text-xs cursor-pointer">Low</Label>
+              </div>
+            </RadioGroup>
+          </div>
         </div>
         
         {/* Expanded details */}
         {showDetails && (
-          <div className="space-y-4 animate-fade-in">
+          <div className="space-y-4 animate-in fade-in slide-in-from-top duration-300">
             <Textarea
               placeholder="Add description..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="min-h-[80px] transition-all duration-200"
+              className="min-h-[80px] transition-all duration-200 focus-visible:ring-orange-400"
             />
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Due date picker */}
               <div>
-                <Label htmlFor="due-date" className="text-sm font-medium mb-1 block">
+                <Label htmlFor="due-date" className="text-sm font-medium mb-1 block text-muted-foreground">
                   Due Date
                 </Label>
                 <Popover>
@@ -146,11 +154,11 @@ const TaskInput: React.FC = () => {
                     <Button
                       variant="outline"
                       className={cn(
-                        "w-full justify-start text-left font-normal transition-all duration-200",
+                        "w-full justify-start text-left font-normal transition-all duration-200 border-muted-foreground/20",
                         !dueDate && "text-muted-foreground"
                       )}
                     >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      <CalendarIcon className="mr-2 h-4 w-4 text-orange-500" />
                       {dueDate ? format(dueDate, "PPP") : "Select date"}
                     </Button>
                   </PopoverTrigger>
@@ -160,6 +168,7 @@ const TaskInput: React.FC = () => {
                       selected={dueDate}
                       onSelect={setDueDate}
                       initialFocus
+                      className="border rounded-md"
                     />
                   </PopoverContent>
                 </Popover>
@@ -167,17 +176,17 @@ const TaskInput: React.FC = () => {
               
               {/* Location input */}
               <div>
-                <Label htmlFor="location" className="text-sm font-medium mb-1 block">
+                <Label htmlFor="location" className="text-sm font-medium mb-1 block text-muted-foreground">
                   Location (for weather)
                 </Label>
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-orange-500" />
                   <Input
                     id="location"
-                    placeholder="e.g. New York"
+                    placeholder="e.g. New York, London, Tokyo"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    className="pl-10 transition-all duration-200"
+                    className="pl-10 transition-all duration-200 border-muted-foreground/20 focus-visible:ring-orange-400"
                   />
                 </div>
               </div>

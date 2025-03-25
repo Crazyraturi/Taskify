@@ -1,12 +1,13 @@
-
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { RootState } from '@/store';
 import { fetchTasks } from '@/store/slices/taskSlice';
 import TaskItem from './TaskItem';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { useAppDispatch } from '@/store';
+import { CheckCircle2, ListTodo, ClipboardList } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const TaskList: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -30,41 +31,68 @@ const TaskList: React.FC = () => {
   
   if (status === 'loading' && tasks.length === 0) {
     return (
-      <div className="flex justify-center py-12">
-        <LoadingSpinner />
+      <div className="flex flex-col items-center justify-center py-16">
+        <LoadingSpinner size="lg" />
+        <p className="mt-4 text-muted-foreground">Loading your tasks...</p>
       </div>
     );
   }
   
   if (tasks.length === 0) {
     return (
-      <div className="text-center py-12">
-        <h3 className="text-lg font-medium text-muted-foreground">No tasks yet</h3>
-        <p className="text-sm text-muted-foreground/70 mt-1">
-          Add a task to get started
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col items-center justify-center py-16 px-4 text-center"
+      >
+        <div className="mb-6 rounded-full bg-muted p-6">
+          <ClipboardList className="h-12 w-12 text-orange-400" />
+        </div>
+        <h3 className="text-xl font-medium mb-2">No tasks yet</h3>
+        <p className="text-muted-foreground max-w-md mb-6">
+          Your task list is empty. Add your first task using the form above to get started.
         </p>
-      </div>
+        <Button 
+          onClick={() => document.querySelector('input')?.focus()} 
+          className="bg-orange-400 hover:bg-orange-500"
+        >
+          <ListTodo className="mr-2 h-4 w-4" />
+          Create your first task
+        </Button>
+      </motion.div>
     );
   }
   
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Pending tasks */}
       <div>
-        <h2 className="text-lg font-semibold mb-3">Tasks ({pendingTasks.length})</h2>
+        <div className="flex items-center mb-4">
+          <ListTodo className="mr-2 h-5 w-5 text-orange-500" />
+          <h2 className="text-lg font-semibold">Tasks <span className="ml-1 text-muted-foreground">({pendingTasks.length})</span></h2>
+        </div>
         <AnimatePresence>
           {sortedPendingTasks.map(task => (
             <TaskItem key={task.id} task={task} />
           ))}
         </AnimatePresence>
+        
+        {pendingTasks.length === 0 && (
+          <div className="rounded-md border border-dashed border-muted p-4 text-center text-muted-foreground">
+            Great job! You've completed all your tasks.
+          </div>
+        )}
       </div>
       
       {/* Completed tasks */}
       {completedTasks.length > 0 && (
         <div>
-          <h2 className="text-lg font-semibold mb-3 text-muted-foreground">
-            Completed ({completedTasks.length})
-          </h2>
+          <div className="flex items-center mb-4">
+            <CheckCircle2 className="mr-2 h-5 w-5 text-green-500" />
+            <h2 className="text-lg font-semibold text-muted-foreground">
+              Completed <span className="ml-1">({completedTasks.length})</span>
+            </h2>
+          </div>
           <AnimatePresence>
             {completedTasks.map(task => (
               <TaskItem key={task.id} task={task} />
